@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="whW-J3-Jjs" customClass="ExitFootView" customModule="GuessStone" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhZ-vt-HP2">
+                    <rect key="frame" x="10" y="0.0" width="300" height="45"/>
+                    <color key="backgroundColor" red="0.23156151180000001" green="0.59759652610000003" blue="0.9966396689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="退出登录">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="ExitLogin:" destination="whW-J3-Jjs" eventType="touchUpInside" id="PKy-UL-e3W"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="jhZ-vt-HP2" firstAttribute="top" secondItem="whW-J3-Jjs" secondAttribute="top" id="6Vd-D8-6WX"/>
+                <constraint firstAttribute="trailing" secondItem="jhZ-vt-HP2" secondAttribute="trailing" constant="10" id="f08-LJ-qEo"/>
+                <constraint firstItem="jhZ-vt-HP2" firstAttribute="leading" secondItem="whW-J3-Jjs" secondAttribute="leading" constant="10" id="i3a-L9-BGq"/>
+                <constraint firstAttribute="bottom" secondItem="jhZ-vt-HP2" secondAttribute="bottom" id="tLu-vi-R81"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-540.5" y="-311.5"/>
+        </view>
+    </objects>
+</document>

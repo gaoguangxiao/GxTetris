@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "720F2F979CC237482C4A5ADE9FB431BD4EFB0BFC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "720F2F979CC237482C4A5ADE9FB431BD4EFB0BFC" : 9223372036854775807,
+    "7C20975E33CEC051A5EB837C4A954F8B017BBB38" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B3F0D92E-D2D2-43E5-BE68-D0598DF843CE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "720F2F979CC237482C4A5ADE9FB431BD4EFB0BFC" : "HappyPic\/",
+    "7C20975E33CEC051A5EB837C4A954F8B017BBB38" : ".."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "乐科图",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "乐科图.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/ggx125\/leketu.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "720F2F979CC237482C4A5ADE9FB431BD4EFB0BFC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/ggx125\/iOS_xinlian.app.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7C20975E33CEC051A5EB837C4A954F8B017BBB38"
+    }
+  ]
+}
