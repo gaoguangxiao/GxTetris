@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A97BB431F27434F0057D8B5 /* Array+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A97BB421F27434F0057D8B5 /* Array+extension.swift */; };
 		9AA796451F25969B0031C676 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA796171F25969A0031C676 /* AppDelegate.swift */; };
 		9AA796461F25969B0031C676 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AA796181F25969A0031C676 /* Assets.xcassets */; };
 		9AA796471F25969B0031C676 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AA796191F25969A0031C676 /* LaunchScreen.storyboard */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		6160EBCF3DEA30368C1472C6 /* Pods-GxTetris.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GxTetris.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GxTetris/Pods-GxTetris.debug.xcconfig"; sourceTree = "<group>"; };
 		9A864C2F1F0CDEEF00E3989C /* GxTetris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GxTetris.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A97BB421F27434F0057D8B5 /* Array+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+extension.swift"; sourceTree = "<group>"; };
 		9AA796171F25969A0031C676 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AA796181F25969A0031C676 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9AA7961A1F25969A0031C676 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				9AA796361F25969B0031C676 /* AudioPlayer.swift */,
 				9AA796381F25969B0031C676 /* SweetAlert.swift */,
 				9AA7966C1F25DC310031C676 /* UIView+Extension.swift */,
+				9A97BB421F27434F0057D8B5 /* Array+extension.swift */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				9AA796671F259FFB0031C676 /* BasicSquare.swift in Sources */,
 				9AA7965F1F25969B0031C676 /* UserCenterViewController.swift in Sources */,
 				9AA7964B1F25969B0031C676 /* CustomUtil.swift in Sources */,
+				9A97BB431F27434F0057D8B5 /* Array+extension.swift in Sources */,
 				9AA914AC1F1DAF89007FCD95 /* ViewControllerImpl.swift in Sources */,
 				9AA7965D1F25969B0031C676 /* HomeViewController.swift in Sources */,
 			);

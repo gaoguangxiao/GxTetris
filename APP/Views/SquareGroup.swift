@@ -55,14 +55,14 @@ class SquareGroup: UIView {
         //3、展示组合
         showCurrentGroup()
         //4、更新提示的View
-        updateTipView()
+//        updateTipView()
     }
     
     //清空上次的显示
     func clearPrevGroup() {
         for squere in self.subviews {
             let squareM = squere as! BasicSquare
-            squareM.select(false)
+            squareM.isSelectSquare = false
         }
     }
     //显示组合
@@ -76,12 +76,13 @@ class SquareGroup: UIView {
         let randomData = catchAnRandomGroup()
         self.tipGroup = randomData.first as! Array<Int>
         
-        self.tipIndx = randomData.last as! NSInteger
+        self.tipIndx = (randomData.last as!Int)
     
         for i in 0..<self.group.count {
             let index = self.group[i]
             let squareM = self.subviews[index]as!BasicSquare
-            squareM.select(true)
+//            squareM.isSelectSquare(true)
+            squareM.isSelectSquare = true
         }
     }
     
@@ -90,18 +91,21 @@ class SquareGroup: UIView {
         let typesArray = types()
         
         //获取随机一个数值
-//        int bangIndex = arc4random_uniform((uint32_t)self.types.count);
-        let bangIndex = 1
+//        let bangIndex = arc4random_uniform(UInt32(typesArray.count));
+        let bangIndex = 6
+//        print("组合大类：\(bangIndex)")
+
         //选取某一组形状
 //        NSArray *randomBang = self.types[bangIndex];
-        let randomBang = typesArray[bangIndex] as!NSArray
+        let randomBang = typesArray[Int(bangIndex)] as!Array<Any>
         //选取一组形状中的某一个
-        // int groupindex = arc4random_uniform((uint32_t)randomBang.count);
-        let groupindex = 0
-        //        NSArray *randomGroup = randomBang[groupindex];
-        let randomGroup = randomBang[groupindex]
+         let groupindex = arc4random_uniform(UInt32(randomBang.count));
+//        let groupindex = 0
+//        print("组合第几：\(groupindex)")
+        //NSArray *randomGroup = randomBang[groupindex];
+        let randomGroup = randomBang[Int(groupindex)]
  
-        return [randomGroup, (bangIndex)];
+        return [randomGroup, Int(bangIndex)];
     }
     
     //设置初始位置
@@ -125,6 +129,37 @@ class SquareGroup: UIView {
             let index = tip[i]
             let square = self.setupview().subviews[index]as!BasicSquare
             square.select(true)
+        }
+        
+    }
+    
+    //旋转的数据
+    func rotate(canRotate:(_ nextGroup:NSArray) -> Bool){
+    //找出包含待旋转的方块数组
+        var array = NSArray()
+        
+        for i in 0..<self.types().count {
+            let tempArray = self.types()[i]
+            if (tempArray as AnyObject).contains(self.group) {
+                array = tempArray as! NSArray
+            }
+        }
+        
+        //拿到该组合的索引，循环取出下一个组合
+        let index = array.index(of: self.group)
+        //该组合的索引+1取余
+        let nextIndex = (index + 1)%array.count
+        //下一组旋转的数据
+        let nextGroup = array[nextIndex] as!NSArray
+
+        if canRotate(nextGroup) {
+            clearPrevGroup()
+            for i in 0..<nextGroup.count {
+                let tempIndex = nextGroup[i]as!Int
+                let square = self.subviews[tempIndex]as!BasicSquare
+                square.isSelectSquare = true
+            }
+            self.group = nextGroup as! Array<Int>
         }
         
     }

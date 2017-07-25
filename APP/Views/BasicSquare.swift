@@ -10,12 +10,16 @@ import UIKit
 
 extension UIButton{
     
-    var isSelect: Bool {
+    var isSelectSquare: Bool {
         get {
             return self.isSelected
         }
         set {
+//            self.select(newValue)
+            select(newValue)
             self.isSelected = newValue
+            
+
         }
     }
    
@@ -42,14 +46,15 @@ class BasicSquare: UIButton {
     
    
     
-    override func select(_ sender: Any?) {
+    override func select(_ sender: Any?){
 //        super.select(sender)
-
+//        self.isSelectSquare = (sender != nil)
+        
         if internalType == 11 {
-            self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 0.8 : 0.3);
+            self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 1.0 : 0.3);
         }else if internalType == 22 {
-            print(sender!)
-            self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 1.0 : 0);
+//            print(sender!)
+            self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 0.5 : 0);
         }
     }
     
