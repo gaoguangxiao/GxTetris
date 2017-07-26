@@ -15,7 +15,6 @@ extension UIButton{
             return self.isSelected
         }
         set {
-//            self.select(newValue)
             select(newValue)
             self.isSelected = newValue
             
@@ -34,6 +33,9 @@ class BasicSquare: UIButton {
         if internalType == 11 {
             self.layer.borderWidth = 0.5
             self.layer.borderColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
+        }else{
+//            self.layer.borderWidth = 0.5
+//            self.layer.borderColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5).cgColor
         }
 
         //test
@@ -47,13 +49,10 @@ class BasicSquare: UIButton {
    
     
     override func select(_ sender: Any?){
-//        super.select(sender)
-//        self.isSelectSquare = (sender != nil)
-        
+
         if internalType == 11 {
-            self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 1.0 : 0.3);
+            self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 0.8 : 0);
         }else if internalType == 22 {
-//            print(sender!)
             self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha:(sender as!Bool) ? 0.5 : 0);
         }
     }

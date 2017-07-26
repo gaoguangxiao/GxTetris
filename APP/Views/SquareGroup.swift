@@ -15,6 +15,7 @@ class SquareGroup: UIView {
     var tipIndx  : NSInteger = 0
     var group : Array<Int>!
     
+    var tipView :UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,18 +30,16 @@ class SquareGroup: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func tipBoard() -> UIView {
+        tipView = setupview()
+        return tipView;
+    }
     
-    func setupview() ->UIView {
-        let tipView = UIView.init(frame: CGRect(x: 0,y: 0,width:4 * kSquareWH,height:2 * kSquareWH))
+    private func setupview() ->UIView {
+        tipView = UIView.init(frame: CGRect(x: 0,y: 0,width:4 * kSquareWH,height:2 * kSquareWH))
         for i in 0..<8 {
             let squareMask = BasicSquare.init(frame: CGRect(x:i % 4 * kSquareWH,y:i / 4 * kSquareWH,width:kSquareWH,height:kSquareWH),type: 22)
             tipView.addSubview(squareMask)
-            squareMask.setTitle(String.init(format:"%d",i), for: UIControlState.normal)
-//            squareMask.select(true)
-            squareMask.setTitleColor(UIColor.orange, for: UIControlState.normal)
-//            square.setTitle(String(format: "%d", i), for: UIControlState.normal)
-//            [squareMask setTitle:[NSString stringWithFormat:"%d", i] forState:UIControlStateNormal];
-
         }
         return tipView
     }
@@ -54,8 +53,10 @@ class SquareGroup: UIView {
         clearPrevGroup()
         //3、展示组合
         showCurrentGroup()
-        //4、更新提示的View
-//        updateTipView()
+        //4、设置初始位置
+        initPosition()
+        //5、更新提示的View
+        updateTipView()
     }
     
     //清空上次的显示
@@ -81,7 +82,6 @@ class SquareGroup: UIView {
         for i in 0..<self.group.count {
             let index = self.group[i]
             let squareM = self.subviews[index]as!BasicSquare
-//            squareM.isSelectSquare(true)
             squareM.isSelectSquare = true
         }
     }
@@ -91,8 +91,8 @@ class SquareGroup: UIView {
         let typesArray = types()
         
         //获取随机一个数值
-//        let bangIndex = arc4random_uniform(UInt32(typesArray.count));
-        let bangIndex = 6
+        let bangIndex = arc4random_uniform(UInt32(typesArray.count));
+//        let bangIndex = 6
 //        print("组合大类：\(bangIndex)")
 
         //选取某一组形状
@@ -109,26 +109,36 @@ class SquareGroup: UIView {
     }
     
     //设置初始位置
-//    func initPosition() {
-//        for i in  {
-//            <#code#>
-//        }
-//    }
+    func initPosition() {
+        var count = self.subviews.count - 1
+        
+        while count >= 0 {
+            let lastSquare = self.subviews[count]as!BasicSquare
+            if lastSquare.isSelectSquare {
+                self.y = self.y! - lastSquare.y!
+                return
+            }
+            count = count - 1
+        }
+
+    }
     
     func updateTipView() {
-        for squere in self.setupview().subviews {
+        //
+        for squere in self.tipView.subviews {
             let squareM = squere as! BasicSquare
-            squareM.select(false)
+            squareM.isSelectSquare = false
         }
         
         let tip = tipTypes()[self.tipIndx]as!Array<Int>
 
 //        print(tip.count)
-//        print(self.setupview().subviews.count)
+        print(self.tipView.subviews.count)
         for i in 0..<tip.count {
             let index = tip[i]
-            let square = self.setupview().subviews[index]as!BasicSquare
-            square.select(true)
+//            print(index)
+            let square = self.tipView.subviews[index]as!BasicSquare
+            square.isSelectSquare = true
         }
         
     }

@@ -10,15 +10,20 @@ import Foundation
 
 
 
-extension Array where Element: Equatable {
-    mutating func removeObject(object: Element) {
-        if let index = self.index(of: object) {
-            self.remove(at: index)
+extension NSMutableArray{
+    func removeObject(object: NSArray) {
+        //1、判断是否包含
+        if self.contains(object) {
+            //2、移除
+            self.remove(object)
         }
+        
+       
     }
-    mutating func removeObjectsInArray(array: [Element]) {
+    
+    func removeObjectsInArray(array: Array<Any>) {
         for object in array {
-            self.removeObject(object: object)
+            self.removeObject(object: object as! NSArray)
         }
     }
 }
