@@ -31,13 +31,13 @@ class AudioPlayer: NSObject {
 
     
     //播放
-    static func play()->Bool{
+    static func play(){
         if (instance?.isPlaying)! {
             instance?.pause()
-            return false
+//            return false
         }else{
             instance?.play()
-            return true
+//            return true
         }
     }
     //是否在播放音乐
@@ -45,4 +45,12 @@ class AudioPlayer: NSObject {
         return (instance?.isPlaying)!
     }
     
+    //暂停音乐的播放
+    static func stop()  {
+        if (instance?.isPlaying)! {
+            instance?.stop()
+        }else{
+            instance?.pause()
+        }
+    }
 }

@@ -18,12 +18,14 @@ let kRowCount = 20 //20 高度保持440
 let kColumnCount = 11
 let kSquareWH  = 22
 
-let upLevel = 10//控制消行的升级问题
+//mei'xiao'gou
+let upLevel = 15//控制消行的升级问题
 
 
 class HomeViewController: UIViewController {
     
-    @IBOutlet weak var scoreField: UITextField!
+    @IBOutlet weak var scoreField: UITextField!//当前分数
+    @IBOutlet weak var heightScore: UITextField!//最高分
     @IBOutlet weak var lineCountField: UITextField!
     @IBOutlet weak var levelField: UITextField!
     
@@ -42,7 +44,7 @@ class HomeViewController: UIViewController {
     var keepMoveTimer :Timer!//按住按钮持续下移
     var refreshTimer  :Timer!//刷新动画计时器
     
-    var disableButtonActions :Bool! //采取禁用按钮禁用
+    var disableButtonActions :Bool!  = false//采取禁用按钮禁用
     var startPoint : CGPoint!
     var isSettingMode :Bool!//设置模式。1-设置。0移动
     
@@ -54,13 +56,33 @@ class HomeViewController: UIViewController {
     var speedLevel   :Int! = 0//速度级别
     var startupLines :Int! = 0//起始行数
     
+    @IBOutlet weak var clearLineTipImage: UIImageView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "俄罗斯方块"
+        self.navigationItem.title = "天天消方块"
         self.navigationController!.navigationBar.isTranslucent = false;
         
+        //获取上次保持的音乐控制、进来是播放音乐的
+        AudioPlayer.share(soundFileName: "m_game_bg.mp3")
+        
+
+        
+        let soundbtn = UIButton.init(type: UIButtonType.custom)
+        soundbtn.frame = CGRect(x:0,y:0,width:40,height:40)
+        soundbtn.setImage(UIImage.init(named: "ico_sound_close.png"), for: UIControlState.selected)
+        soundbtn.setImage(UIImage.init(named: "ico_sound_open.png"), for: UIControlState.normal)
+        soundbtn.addTarget(self, action: #selector(SoundSetting(sender:)), for: UIControlEvents.touchUpInside)
+//        let rightItem = UIBarButtonItem.init(customView: soundbtn)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: soundbtn)
+
+        let isOpen = CustomUtil.getSoundSet()
+        //返回false，执行下面的语句,禁止播放状态
+        if !isOpen {//如果是打开
+            soundbtn.isSelected = true
+            AudioPlayer.play()
+        }
         
         setupUI()
         
@@ -71,13 +93,30 @@ class HomeViewController: UIViewController {
         
     }
     
+    func SoundSetting(sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        AudioPlayer.play()
+        //选中状态是禁止播放
+        CustomUtil.saveSoundSet(status: !sender.isSelected)
+    }
+
+    //初始化游戏参数
     func initConfigs() {
         startPoint = CGPoint(x:kSquareWH * 4 + leftmargin,y:0 + topMargin)
+        //1、最高分
+        //a、存储中是否存有最高分，有的话就初始化
+        let bestScore = CustomUtil.getBestScore()
+   
+        heightScore.text = String(format:"%d",bestScore)
+       
         
+        //当前分数
         score = 0
         scoreField.text = String(format:"%d",score)
+        
         speedLevel = 1
         lineCountField.text = String(format:"%d",clearedLines)
+        
         levelField.text     = String(format:"%ld",speedLevel)
         isSettingMode = true
     }
@@ -105,12 +144,15 @@ class HomeViewController: UIViewController {
         
     }
     
-    
-    //    MARK:定时器
-    func destroyTimer(timer :Timer)  {
-        timer.invalidate()
-    }
+
     func setupDropDownTimer() {
+        
+        if (self.dropDownTimer != nil) {
+            self.dropDownTimer.invalidate()
+            self.dropDownTimer = nil
+
+        }
+        
         var duartion : Double
         if speedLevel == 1 {
             duartion = 1.0
@@ -125,6 +167,7 @@ class HomeViewController: UIViewController {
             let duarationString = NSString(format:"%d",speedLevel)
             duartion = 1.0 - (duarationString.doubleValue * 0.1)
         }
+        
         dropDownTimer = Timer.scheduledTimer(timeInterval:duartion, target: self, selector: #selector(down(_:)), userInfo: nil, repeats: true)
         RunLoop.current.add(dropDownTimer, forMode: RunLoopMode.commonModes)
     }
@@ -201,10 +244,9 @@ class HomeViewController: UIViewController {
         //2、判断是否可移动
         if canMoveDown() {
             self.group.y = self.group.y! + CGFloat(kSquareWH)
-            //            print(self.group.y!)
-            //销毁没有执行到位
-            destroyTimer(timer: self.dropDownTimer)
-            //
+            print(self.group.y!)
+            
+
             setupDropDownTimer()
         }else{
             //test
@@ -213,7 +255,7 @@ class HomeViewController: UIViewController {
             
             clearFullLines()
         }
-        
+
     }
     
     @IBAction func rotate(_ sender: UIButton) {
@@ -230,8 +272,7 @@ class HomeViewController: UIViewController {
     //    MARK:游戏中
     //将落下的方块固定
     func convertGroupSquareToBlack() {
-        //取消下落倒计时
-        destroyTimer(timer: self.dropDownTimer)
+
         //固定已经下落的组合
         for i in 0..<self.group.subviews.count{
             let square = self.group.subviews[i]as!BasicSquare
@@ -243,7 +284,7 @@ class HomeViewController: UIViewController {
                     let Y = Int(rect2.origin.y)/kSquareWH
                     
                     let indexOfBelowSquare = Y * kColumnCount + X
-                    //                    print(indexOfBelowSquare)//将这几个方块变化颜色
+                    //print(indexOfBelowSquare)//将这几个方块变化颜色
                     let  belowSquare = _squareRoomView.subviews[indexOfBelowSquare] as!BasicSquare
                     belowSquare.isSelectSquare = true
                     
@@ -255,14 +296,35 @@ class HomeViewController: UIViewController {
     func gameOverOperaton()  {
         print("游戏结束")
         self.group.isHidden = true
-        //1、记录最高分
-        clearedLines = 0
-        scoreField.text = "0"
+//        //1、记录最高分、应该在游戏分数更新的时候写入
+//        //a、获取当前得分，和最高分相比较，如果当前得分大于最高分，就存下来
+//
+//        if score > CustomUtil.getBestScore()  {
+//            //打破记录
+//             clearLineTipImage.image = UIImage.init(named: "ico_newRecord_str_")
+//             CustomUtil.saveBestScore(score: score)
+//        }
+//        heightScore.text = "\(CustomUtil.getBestScore())"
+
+       
+        //当前分数置为0
         score = 0
-        lineCountField.text = "0"
-        //        levelField.text = "0"
-        //2、销毁定时器
-        destroyTimer(timer: self.dropDownTimer)
+        scoreField.text = "0"
+        //清除的行数置为0
+        clearedLines = 0
+        lineCountField.text = String(format:"%d",clearedLines)
+        //速度置为1
+        speedLevel = 1
+        levelField.text =  String(format:"%d",speedLevel)
+        
+        //2、销毁定时器、一定要吧
+        print("之前 %@",self.dropDownTimer)
+        if (self.dropDownTimer != nil) {
+            self.dropDownTimer.invalidate()
+            self.dropDownTimer = nil
+        }
+       
+        print("之后 %@",self.dropDownTimer)
         //3、刷新动画
         if #available(iOS 10.0, *) {
             commitRefreshAnimation()
@@ -286,8 +348,11 @@ class HomeViewController: UIViewController {
             //            print("变白方法\(rI)")
             if rI > kColumnCount * kRowCount - 1 {
                 print("销毁")
-                destroyTimer(timer: refreshTimer)
-                
+                //写销毁定时器的方法
+                if refreshTimer != nil {
+                    refreshTimer.invalidate()
+                    refreshTimer  = nil
+                }
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: UInt64(0.5)), execute: {
                     //直接开始下一句游戏
                     self.startPlay()
@@ -323,7 +388,10 @@ class HomeViewController: UIViewController {
                 
                 startIndex = 0
                 //销毁
-                destroyTimer(timer: refreshTimer)
+                if refreshTimer != nil {
+                    refreshTimer.invalidate()
+                    refreshTimer  = nil
+                }
                 //重建
                 refreshTimer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true, block: { (timer) in
                     refreshWhite()
@@ -353,6 +421,8 @@ class HomeViewController: UIViewController {
         //1、获取应该消除的行
         let linesShouldClear = LineArrayWaitForClear()
         //2、添加一个消除行的动画
+        
+        //应该消失的行变为true
         for i in 0..<linesShouldClear.count {
             let tempLinex =  linesShouldClear[i]
             
@@ -368,10 +438,13 @@ class HomeViewController: UIViewController {
                 let squareLine = linesShouldClear[i]as!NSArray
                 let lastSquareIndex = squareLine.lastObject as!Int
                 for j in (0..<lastSquareIndex).reversed() {
+                    //209开头的这一行
                     let lastLineSquare = self._squareRoomView.subviews[j]as!BasicSquare
                     if j >= kColumnCount {
                         let aboveSquare = self._squareRoomView.subviews[j - kColumnCount]as!BasicSquare
+                        //依次传递
                         lastLineSquare.isSelectSquare = aboveSquare.isSelectSquare
+                        lastLineSquare.internalImage  = aboveSquare.internalImage
                     }else{
                         lastLineSquare.isSelectSquare  = false
                     }
@@ -383,11 +456,18 @@ class HomeViewController: UIViewController {
         //4、进行分数计算
         calcScoreAndSpeedLevel(clearedCount: linesShouldClear.count)
         
+        
         //5、判断游戏是否结束
         if isOver() {
             //
             gameOverOperaton()
         }else{
+
+            //函数
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.8, execute: {
+                self.clearLineTipImage.isHidden = true
+            })
+            
             self.group.backToStartPoint(startPoint: startPoint)
             setupDropDownTimer()
         }
@@ -396,18 +476,28 @@ class HomeViewController: UIViewController {
     }
     //进行计分，提高速度级别
     func calcScoreAndSpeedLevel(clearedCount:Int)  {
-        //分数增加
+        
         clearedLines = clearedLines + clearedCount
         //消行总数
         levelUpCounter = levelUpCounter + clearedCount
         
         if clearedCount > 0 {
             let calScore = clearedCount == 1 ? 100 : (clearedCount == 2 ? 300 : (clearedCount == 3 ? 600 : 1000));
-            
+            //分数增加
             score = score + calScore
+            clearLineTipImage.isHidden = false
+            if clearedCount == 1 {
+                clearLineTipImage.image = UIImage(named:"ico_good_str")
+            }else if clearedCount == 2{
+                clearLineTipImage.image = UIImage(named:"ico_praise_str")
+            }else if clearedCount == 3{
+                clearLineTipImage.image = UIImage(named:"ico_cool_strl")
+            }else{
+                clearLineTipImage.image = UIImage(named:"ico_soCool_str")
+            }
         }
         //调整等级
-        if speedLevel < 6,levelUpCounter>=upLevel {
+        if speedLevel < 6,levelUpCounter >= upLevel {
             speedLevel = speedLevel + 1
             levelUpCounter = levelUpCounter - upLevel
         }
@@ -415,6 +505,16 @@ class HomeViewController: UIViewController {
         lineCountField.text = String(format: "%d",levelUpCounter)
         //显示分数
         scoreField.text = String(format: "%d",score)
+        //1、记录最高分、应该在游戏分数更新的时候写入
+        //a、获取当前得分，和最高分相比较，如果当前得分大于最高分，就存下来
+        if score > CustomUtil.getBestScore()  {
+            //打破记录
+            clearLineTipImage.image = UIImage.init(named: "ico_newRecord_str_")
+            CustomUtil.saveBestScore(score: score)
+            
+            heightScore.text = String(format: "%d",score)
+        }
+        
         //显示级别
         levelField.text = String(format: "%ld",speedLevel)
     }
@@ -612,9 +712,12 @@ class HomeViewController: UIViewController {
     //判断游戏状态
     func isPauseState() -> Bool {
         if self.pauseButton.isSelected {//暂停状态
-            setupDropDownTimer()
+            disableButtonActions = false
             self.pauseButton.isSelected = false
+            setupDropDownTimer()
             
+            return true
+        }else if disableButtonActions{
             return true
         }else{
             
@@ -635,10 +738,12 @@ class HomeViewController: UIViewController {
     //    MARK:设置
     //重玩
     @IBAction func rePlay(_ sender: UIButton) {
+        
+
         if isSettingMode {
             startPlay()
         }else{
-            convertGroupSquareToBlack()
+
             gameOverOperaton()
         }
         
@@ -651,6 +756,7 @@ class HomeViewController: UIViewController {
         self.group.isHidden  = false
         //2、设置提示起始点
         self.group.backToStartPoint(startPoint: startPoint)
+        
         //3、设置下落时间
         setupDropDownTimer()
         //4、设置起始行
@@ -664,13 +770,22 @@ class HomeViewController: UIViewController {
     }
     @IBAction func pause(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        
         if sender.isSelected {
-            destroyTimer(timer: self.dropDownTimer)
+            disableButtonActions = true
+            
+            if (self.dropDownTimer != nil) {
+                self.dropDownTimer.invalidate()
+                self.dropDownTimer = nil
+                
+            }
+
         }else{
+            disableButtonActions = false
             setupDropDownTimer()
         }
     }
-    
+  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

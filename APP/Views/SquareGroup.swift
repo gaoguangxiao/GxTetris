@@ -13,6 +13,8 @@ class SquareGroup: UIView {
     
     var tipGroup : Array<Int>!
     var tipIndx  : NSInteger = 0
+    var selectImage: UIImage!
+    
     var group : Array<Int>!
     
     var tipView :UIView!
@@ -79,9 +81,12 @@ class SquareGroup: UIView {
         
         self.tipIndx = (randomData.last as!Int)
     
+        self.selectImage = selectStarImage()
+        
         for i in 0..<self.group.count {
             let index = self.group[i]
             let squareM = self.subviews[index]as!BasicSquare
+            squareM.internalImage  = self.selectImage
             squareM.isSelectSquare = true
         }
     }
@@ -92,7 +97,7 @@ class SquareGroup: UIView {
         
         //获取随机一个数值
         let bangIndex = arc4random_uniform(UInt32(typesArray.count));
-//        let bangIndex = 6
+//        let bangIndex = 5
 //        print("组合大类：\(bangIndex)")
 
         //选取某一组形状
@@ -132,13 +137,13 @@ class SquareGroup: UIView {
         
         let tip = tipTypes()[self.tipIndx]as!Array<Int>
 
-//        print(tip.count)
-        print(self.tipView.subviews.count)
+
         for i in 0..<tip.count {
             let index = tip[i]
 //            print(index)
             let square = self.tipView.subviews[index]as!BasicSquare
             square.isSelectSquare = true
+            square.internalImage  = self.selectImage
         }
         
     }
@@ -174,14 +179,26 @@ class SquareGroup: UIView {
         
     }
     
+    //取出应该显示颜色
+    func selectStarImage() -> UIImage {
+        let random = Int(arc4random_uniform(UInt32(5)))
+        let picture = [UIImage.init(named: "star_b"),
+                       UIImage.init(named: "star_g"),
+                       UIImage.init(named: "star_p"),
+                       UIImage.init(named: "star_r"),
+                       UIImage.init(named: "star_y")]
+        
+        return  picture[random]!;
+    }
+    
     func tipTypes() -> (NSArray) {
         return [
-        [0, 1, 5, 6], // Z
-        [1, 2, 4, 5], // 反Z
+        [1, 2, 6, 7], // Z
+        [2, 3, 5, 6], // 反Z
         [2, 4, 5, 6], // L
         [0, 4, 5, 6], // 反L
         [1, 4, 5, 6], // 凸
-        [0, 1, 4, 5], // 田
+        [1, 2, 5, 6], // 田
         [4, 5, 6, 7], // 一
         ]
     }
@@ -219,7 +236,7 @@ class SquareGroup: UIView {
         [4, 5, 6, 9],
         ],
         
-        [[0, 1, 4, 5],    // 田
+        [[1, 2, 5, 6],    // 田
         ],
         
         [

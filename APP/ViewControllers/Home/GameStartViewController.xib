@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameStartViewController" customModule="GxTetris" customModuleProvider="target">
+            <connections>
+                <outlet property="_soundSetting" destination="S56-QI-lPA" id="rOS-9e-PbW"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="game_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="1nX-mx-DYX">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogn-pB-rMd">
+                    <rect key="frame" x="24.5" y="272.5" width="326" height="122"/>
+                    <state key="normal" image="ico_start.png"/>
+                    <connections>
+                        <action selector="StartGame:" destination="-1" eventType="touchUpInside" id="c66-3p-PU0"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico_title_beian.png" translatesAutoresizingMaskIntoConstraints="NO" id="0zV-qf-n8J">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="142"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="142" id="tZZ-gK-6je"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S56-QI-lPA">
+                    <rect key="frame" x="142" y="557" width="90" height="90"/>
+                    <state key="normal" image="ico_sound_open.png"/>
+                    <state key="selected" image="ico_sound_close.png"/>
+                    <connections>
+                        <action selector="SoundSetting:" destination="-1" eventType="touchUpInside" id="Qro-lo-OVV"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="1nX-mx-DYX" secondAttribute="bottom" id="545-yY-Hz9"/>
+                <constraint firstItem="0zV-qf-n8J" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7AV-5E-xd9"/>
+                <constraint firstAttribute="trailing" secondItem="0zV-qf-n8J" secondAttribute="trailing" id="BM4-b6-T5g"/>
+                <constraint firstItem="ogn-pB-rMd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="JZA-4E-qeD"/>
+                <constraint firstItem="ogn-pB-rMd" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="btR-8k-qFp"/>
+                <constraint firstItem="1nX-mx-DYX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="cch-gu-hiB"/>
+                <constraint firstItem="0zV-qf-n8J" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lxz-7j-cYN"/>
+                <constraint firstItem="1nX-mx-DYX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rEf-rK-bjV"/>
+                <constraint firstAttribute="trailing" secondItem="1nX-mx-DYX" secondAttribute="trailing" id="szb-EX-XtD"/>
+                <constraint firstItem="S56-QI-lPA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tGd-3f-zLh"/>
+                <constraint firstAttribute="bottom" secondItem="S56-QI-lPA" secondAttribute="bottom" constant="20" id="uac-SY-zJU"/>
+            </constraints>
+            <point key="canvasLocation" x="24.5" y="51.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="game_bg.png" width="640" height="1136"/>
+        <image name="ico_sound_close.png" width="90" height="90"/>
+        <image name="ico_sound_open.png" width="90" height="90"/>
+        <image name="ico_start.png" width="326" height="122"/>
+        <image name="ico_title_beian.png" width="600" height="282"/>
+    </resources>
+</document>
