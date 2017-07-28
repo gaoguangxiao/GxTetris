@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let tabbar = RHTabBarViewController()//初始化
         let home = HomeViewController()
         //设置导航栏为指引项
-        let homeNavi = UINavigationController.init(rootViewController: home)
-        window?.rootViewController = homeNavi
+//        let homeNavi = UINavigationController.init(rootViewController: home)
+        window?.rootViewController = home
         window?.makeKeyAndVisible()
         // Override point for customization after application launch.
         return true

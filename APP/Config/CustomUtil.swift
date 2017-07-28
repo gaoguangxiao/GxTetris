@@ -12,6 +12,7 @@ import UIKit
 let U_TOKEN = "TOKEN"
 let U_RBESTSCORE = "BESTSCORE"
 let U_SOUNDSTATUS = "SOUNDSTATUS"
+let U_USERRANGE = "USERRANGE"
 
 let USER_DEFAULT = UserDefaults.standard
 
@@ -64,7 +65,20 @@ class CustomUtil: NSObject {
         }else{
             return 0
         }
-        
+    }
+    
+    //存储用户头衔等级
+    static func saveUserRange(userRange:Int){
+        USER_DEFAULT.set(userRange, forKey: U_USERRANGE)
+        USER_DEFAULT.synchronize()
+    }
+    //获取用户头衔
+    static func getUserRange()->Int{
+        if (USER_DEFAULT.value(forKey: U_USERRANGE) != nil) {
+            return USER_DEFAULT.value(forKey: U_USERRANGE) as! Int
+        }else{
+            return 0
+        }
     }
     
 }

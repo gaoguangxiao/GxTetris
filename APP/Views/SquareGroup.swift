@@ -81,13 +81,16 @@ class SquareGroup: UIView {
         
         self.tipIndx = (randomData.last as!Int)
     
-        self.selectImage = selectStarImage()
+        //这个获取的不一致啊
+        self.selectImage = UIImage.selectStarImage
         
         for i in 0..<self.group.count {
             let index = self.group[i]
             let squareM = self.subviews[index]as!BasicSquare
-            squareM.internalImage  = self.selectImage
             squareM.isSelectSquare = true
+
+            squareM.setSquareSelectImage(image: selectImage, nomalImage: UIImage.init())
+            
         }
     }
     
@@ -97,7 +100,7 @@ class SquareGroup: UIView {
         
         //获取随机一个数值
         let bangIndex = arc4random_uniform(UInt32(typesArray.count));
-//        let bangIndex = 5
+//        let bangIndex = 3
 //        print("组合大类：\(bangIndex)")
 
         //选取某一组形状
@@ -131,6 +134,7 @@ class SquareGroup: UIView {
     func updateTipView() {
         //
         for squere in self.tipView.subviews {
+            //将所有的置为 未选择状态
             let squareM = squere as! BasicSquare
             squareM.isSelectSquare = false
         }
@@ -143,7 +147,8 @@ class SquareGroup: UIView {
 //            print(index)
             let square = self.tipView.subviews[index]as!BasicSquare
             square.isSelectSquare = true
-            square.internalImage  = self.selectImage
+            square.setSquareSelectImage(image: selectImage, nomalImage: UIImage.init())
+//            square.internalImage  = self.selectImage
         }
         
     }
@@ -173,6 +178,7 @@ class SquareGroup: UIView {
                 let tempIndex = nextGroup[i]as!Int
                 let square = self.subviews[tempIndex]as!BasicSquare
                 square.isSelectSquare = true
+                square.setSquareSelectImage(image: selectImage, nomalImage: UIImage.init())
             }
             self.group = nextGroup as! Array<Int>
         }
@@ -180,16 +186,16 @@ class SquareGroup: UIView {
     }
     
     //取出应该显示颜色
-    func selectStarImage() -> UIImage {
-        let random = Int(arc4random_uniform(UInt32(5)))
-        let picture = [UIImage.init(named: "star_b"),
-                       UIImage.init(named: "star_g"),
-                       UIImage.init(named: "star_p"),
-                       UIImage.init(named: "star_r"),
-                       UIImage.init(named: "star_y")]
-        
-        return  picture[random]!;
-    }
+//    func selectStarImage() -> UIImage {
+//        let random = Int(arc4random_uniform(UInt32(5)))
+//        let picture = [UIImage.init(named: "star_b"),
+//                       UIImage.init(named: "star_g"),
+//                       UIImage.init(named: "star_p"),
+//                       UIImage.init(named: "star_r"),
+//                       UIImage.init(named: "star_y")]
+//        
+//        return  picture[random]!;
+//    }
     
     func tipTypes() -> (NSArray) {
         return [
