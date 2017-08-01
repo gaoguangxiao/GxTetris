@@ -79,7 +79,7 @@ class HomeViewController: UIViewController {
         let okImage = UIImage.init(named:"banner_bg")
         bannerBg.image = okImage?.resizableImage(withCapInsets: edgeInsetImage, resizingMode: UIImageResizingMode.stretch)
         
-  
+        
         
         let soundbtn = UIButton.init(type: UIButtonType.custom)
         soundbtn.frame = CGRect(x:0,y:0,width:40,height:40)
@@ -137,12 +137,13 @@ class HomeViewController: UIViewController {
         levelField.text     = String(format:"%ld",speedLevel)
         isSettingMode = true
     }
-        func setupUI(){
+    func setupUI(){
         
         let  count = kColumnCount * kRowCount
         for i in 0..<count {
             let square = BasicSquare.init(frame: CGRect(x:i % kColumnCount * kSquareWH + leftmargin,y:i / kColumnCount * kSquareWH + topMargin,width:kSquareWH
                 ,height:kSquareWH),type: 11)
+            square.tag = i//标记tag,查出这一块是否是选择状态
             _squareRoomView.addSubview(square)
             
             /// test
@@ -344,13 +345,13 @@ class HomeViewController: UIViewController {
         levelField.text =  String(format:"%d",speedLevel)
         
         //2、销毁定时器、一定要吧
-        print("之前 %@",self.dropDownTimer)
+//        print("之前 %@",self.dropDownTimer)
         if (self.dropDownTimer != nil) {
             self.dropDownTimer.invalidate()
             self.dropDownTimer = nil
         }
         
-        print("之后 %@",self.dropDownTimer)
+//        print("之后 %@",self.dropDownTimer)
         //3、刷新动画
         if #available(iOS 10.0, *) {
             commitRefreshAnimation()
@@ -456,38 +457,37 @@ class HomeViewController: UIViewController {
             //
             for index in (firstSquareIndex...lastSquareIndex){
                 let square = _squareRoomView.subviews[index] as!BasicSquare
-                
                 //                print(index)
-                square.transform = CGAffineTransform.init(rotationAngle:-(CGFloat)(Double.pi/2));
+                square.transform = CGAffineTransform.init(rotationAngle:(CGFloat)(Double.pi));
                 
                 UIView.animate(withDuration: 0.2, animations: {
-                    square.transform = CGAffineTransform(rotationAngle:CGFloat(Double.pi / 2))
+                    square.transform = CGAffineTransform(rotationAngle:CGFloat(Double.pi * 2))
                 })
-                
-                //另外test
-                //                UIView.animate(withDuration: 0.12, delay: 0.0, options: [UIViewAnimationOptions.overrideInheritedCurve,UIViewAnimationOptions.transitionCurlUp], animations: {
-                //
-                //                }, completion: { (isComplat) in
-                ////                    print("完成")
-                //                })
-                
             }
         }
         
         //3、消失行
         //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+        //linesShouldCleaa有很多数组元素 [[198,199],[209,210]]
         for i in 0..<linesShouldClear.count{
+            //[209,210,211]
             let squareLine = linesShouldClear[i]as!NSArray
+//            [209,210]
             let lastSquareIndex = squareLine.lastObject as!Int
-            for j in (0..<lastSquareIndex).reversed() {
-                //209开头的这一行
+            //219 208，197
+            for j in (0...lastSquareIndex).reversed() {
+                //209开头的这一行 j第一个219，
                 let lastLineSquare = self._squareRoomView.subviews[j]as!BasicSquare
+                
                 if j >= kColumnCount {
                     //比如209行需要消除，- 11之后就是 198的状态给209，那么198有什么状态，是否选中，图片的属性
+                    //获取该消除的上一行是什么状态，传递给下面哪一行
                     let aboveSquare = self._squareRoomView.subviews[j - kColumnCount]as!BasicSquare
                     //依次传递,上个按钮状态和图片
                     lastLineSquare.isSelectSquare = aboveSquare.isSelectSquare
-//                    lastLineSquare.setSquareSelectImage(image: aboveSquare.selectbackImage, nomalImage: aboveSquare.selectbackImage)
+                    
+                    print("方块\(aboveSquare.tag)的消除之前选中状态是\(aboveSquare.isSelectSquare)")
+                    //                    lastLineSquare.setSquareSelectImage(image: aboveSquare.selectbackImage, nomalImage: aboveSquare.selectbackImage)
                 }else{
                     lastLineSquare.isSelectSquare  = false
                 }
@@ -568,7 +568,7 @@ class HomeViewController: UIViewController {
                 let nickNameImage = showImage?.setNickName(userRange: curenntUserRange)
                 nickNAme.image = nickNameImage
             }
-          
+            
         }
         
         //显示级别
@@ -576,9 +576,13 @@ class HomeViewController: UIViewController {
     }
     //找出需要消除的行
     func LineArrayWaitForClear() -> NSMutableArray{
-        //找出刚落下的组合对应的都是第几行
         
         var lineMaybeFull_Arr :Array<Int> = [];
+//        for i in 0..<kRowCount {
+//
+//            lineMaybeFull_Arr.append(i)
+//        }
+//找出刚落下的组合对应的都是第几行、需要修复，只有满足条件的都需要移除，不仅仅这几行
         for i in 0..<self.group.subviews.count {
             let square = self.group.subviews[i]as!BasicSquare
             if square.isSelectSquare {
@@ -596,6 +600,7 @@ class HomeViewController: UIViewController {
             }
         }
         //test
+        
         print("加入的第\(lineMaybeFull_Arr)行")
         
         //拿到这些行里面的所有按钮的索引
@@ -623,13 +628,12 @@ class HomeViewController: UIViewController {
             for j in 0..<indexArr.count {
                 
                 let squareIndex = indexArr[j] as! Int
-                
                 let square = _squareRoomView.subviews[squareIndex]as!BasicSquare
-                
+                //test
+//                let index = i * kColumnCount + j
+                print("第\(square.tag)的选中状态是\(square.isSelectSquare)")
                 if square.isSelectSquare {
-                    print("被选择的",squareIndex)
                 }else{
-                    print("没有块块",squareIndex)
                     notFullFlag = 1
                 }
             }
@@ -643,7 +647,7 @@ class HomeViewController: UIViewController {
         
         //只保留满行的数组
         indexArrays.removeObjectsInArray(array: notFullLines)
-        
+        print("需要消除的行\(indexArrays)")
         return indexArrays
         
         
