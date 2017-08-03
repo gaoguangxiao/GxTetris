@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = UIColor.white//设置window颜色
         
 //        let tabbar = RHTabBarViewController()//初始化
-        let home = HomeViewController()
+        let home = GameStartViewController()
         //设置导航栏为指引项
 //        let homeNavi = UINavigationController.init(rootViewController: home)
         window?.rootViewController = home

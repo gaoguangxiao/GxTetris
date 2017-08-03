@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import KYCircularProgress
 let kScreenWidth = UIScreen.main.bounds.size.width
 let kScreenHeight = UIScreen.main.bounds.size.height
 
@@ -31,8 +31,8 @@ class HomeViewController: UIViewController {
     
     
     @IBOutlet weak var _squareRoomView: UIView!//方块区域
-    @IBOutlet weak var tipBoardView: UIView!
-    @IBOutlet weak var pauseButton: UIButton!
+    @IBOutlet weak var tipBoardView: UIView!   //显示面板，提示下一个显示
+    @IBOutlet weak var pauseButton: UIButton!  //暂停按钮
     
     var _edgeRotateOffset :CGFloat = 0.0 //旋转溢出补偿
     
@@ -60,7 +60,12 @@ class HomeViewController: UIViewController {
     //1.0.2 顶部图片变形处理
     @IBOutlet weak var bannerBg: UIImageView!
     @IBOutlet weak var nickNAme: UIImageView!//称为
+    //1.0.3 增加升级进度条
+    @IBOutlet weak var progressView: UIView!
+    private var starProgress: KYCircularProgress!
+    var isNewGame : Bool! = false//新游戏
     
+    @IBOutlet weak var PointNum: UILabel!//百分比
     //1.0.2 增加隐藏状态栏
     override var prefersStatusBarHidden: Bool{
         return true
@@ -96,14 +101,48 @@ class HomeViewController: UIViewController {
         //            AudioPlayer.play()
         //        }
         
-        setupUI()
-        
+        //可以继续游戏保存之前的游戏状态
         initConfigs()
+        
+        if isNewGame {
+            setupUI()
+        }else{
+            //将
+            containconvertGroupSquareToBlack()
+        }
         
         //test
         startPlay()
         
     }
+    
+    //将上一局玩的数据在这次重新计入
+    func containconvertGroupSquareToBlack() {
+        
+        //获取上一级保存的记录 [true, ]
+        var lastRecord = CustomUtil.getGameRecord()
+        
+        //        for _ in 0...lastRecord.count {
+        //             let bangIndex = Int(arc4random_uniform(UInt32(2)));
+        //            lastRecord.append([false,true][bangIndex])
+        //        }
+        //
+        print(lastRecord)
+        
+        //固定已经下落的组合
+        for i in 0..<lastRecord.count{
+            
+            let  belowSquare = _squareRoomView.subviews[i] as!BasicSquare
+            //1、赋值 选中状态
+            belowSquare.isSelectSquare = true
+            //2、赋值 选中状态的图片
+            belowSquare.setSquareSelectImage(image: self.group.selectImage, nomalImage: UIImage.init())
+            
+            
+        }
+    }
+    
+    
     
     func SoundSetting(sender: UIButton) {
         sender.isSelected = !sender.isSelected
@@ -125,6 +164,22 @@ class HomeViewController: UIViewController {
         let showImage = UIImage(named: "badge_call")
         let nickNameImage = showImage?.setNickName(userRange: userRange)
         nickNAme.image = nickNameImage
+        //初始化进度
+        print(progressView.bounds.size.width)
+        starProgress = KYCircularProgress(frame: CGRect(x: 0, y: 0, width: progressView.bounds.size.width, height: 15))
+        starProgress.colors = [.purple, UIColor(rgba: 0xFFF77A55), .orange,UIColor(rgba: 0xFFF77A55),.blue,.red,.yellow]
+        starProgress.lineWidth = 30.0
+        starProgress.progressChanged { (progress: Double, KYCircularProgress) in
+            self.PointNum.text = String(format: "%.2f", progress * 100.0) + "%"
+        }
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0.0, y: 0.0))
+        path.addLine(to: CGPoint(x: progressView.bounds.size.width, y: 0.0))
+        path.close()
+        starProgress.path = path
+        //0.5相等于1.0
+        starProgress.progress = 0.0
+        progressView.addSubview(starProgress)
         
         
         //当前分数
@@ -147,8 +202,8 @@ class HomeViewController: UIViewController {
             _squareRoomView.addSubview(square)
             
             /// test
-            square.setTitleColor(UIColor.orange, for: UIControlState.normal)
-            square.setTitle(String(format: "%d", i), for: UIControlState.normal)
+            //            square.setTitleColor(UIColor.orange, for: UIControlState.normal)
+            //            square.setTitle(String(format: "%d", i), for: UIControlState.normal)
             
         }
         
@@ -344,14 +399,17 @@ class HomeViewController: UIViewController {
         speedLevel = 1
         levelField.text =  String(format:"%d",speedLevel)
         
+        //
+        starProgress.progress = 0.0
+        
         //2、销毁定时器、一定要吧
-//        print("之前 %@",self.dropDownTimer)
+        //        print("之前 %@",self.dropDownTimer)
         if (self.dropDownTimer != nil) {
             self.dropDownTimer.invalidate()
             self.dropDownTimer = nil
         }
         
-//        print("之后 %@",self.dropDownTimer)
+        //        print("之后 %@",self.dropDownTimer)
         //3、刷新动画
         if #available(iOS 10.0, *) {
             commitRefreshAnimation()
@@ -472,7 +530,7 @@ class HomeViewController: UIViewController {
         for i in 0..<linesShouldClear.count{
             //[209,210,211]
             let squareLine = linesShouldClear[i]as!NSArray
-//            [209,210]
+            //            [209,210]
             let lastSquareIndex = squareLine.lastObject as!Int
             //219 208，197
             for j in (0...lastSquareIndex).reversed() {
@@ -486,7 +544,7 @@ class HomeViewController: UIViewController {
                     //依次传递,上个按钮状态和图片
                     lastLineSquare.isSelectSquare = aboveSquare.isSelectSquare
                     
-                    print("方块\(aboveSquare.tag)的消除之前选中状态是\(aboveSquare.isSelectSquare)")
+                    //                    print("方块\(aboveSquare.tag)的消除之前选中状态是\(aboveSquare.isSelectSquare)")
                     //                    lastLineSquare.setSquareSelectImage(image: aboveSquare.selectbackImage, nomalImage: aboveSquare.selectbackImage)
                 }else{
                     lastLineSquare.isSelectSquare  = false
@@ -516,7 +574,7 @@ class HomeViewController: UIViewController {
         
         
     }
-    //进行计分，提高速度级别
+    //进行计分，提高速度级别，进行用户等级更新，以及分数计算
     func calcScoreAndSpeedLevel(clearedCount:Int)  {
         
         clearedLines = clearedLines + clearedCount
@@ -538,7 +596,7 @@ class HomeViewController: UIViewController {
                 clearLineTipImage.image = UIImage(named:"ico_soCool_str")
             }
         }
-        //调整等级
+        //调整等级 上限10
         if speedLevel < 6,levelUpCounter >= upLevel {
             speedLevel = speedLevel + 1
             levelUpCounter = levelUpCounter - upLevel
@@ -549,17 +607,16 @@ class HomeViewController: UIViewController {
         scoreField.text = String(format: "%d",score)
         //1、记录最高分、应该在游戏分数更新的时候写入
         //a、获取当前得分，和最高分相比较，如果当前得分大于最高分，就存下来
+        //每次打破记录，需要查询当前头衔等级
+        let userRange = CustomUtil.getUserRange()
+        //计算当前用户升级所需积分、
+        let upLevelScore = 1000 * (userRange + 1)
         if score > CustomUtil.getBestScore()  {
             //打破记录
             clearLineTipImage.image = UIImage.init(named: "ico_newRecord_str_")
             CustomUtil.saveBestScore(score: score)
             
             heightScore.text = String(format: "%d",score)
-            
-            //每次打破记录，需要查询当前头衔等级
-            let userRange = CustomUtil.getUserRange()
-            //计算当前用户升级所需积分、
-            let upLevelScore = 1000 * (userRange + 1)
             if score > upLevelScore {
                 //保存头衔等级
                 CustomUtil.saveUserRange(userRange: userRange + 1)
@@ -567,8 +624,18 @@ class HomeViewController: UIViewController {
                 let showImage = UIImage(named: "badge_call")
                 let nickNameImage = showImage?.setNickName(userRange: curenntUserRange)
                 nickNAme.image = nickNameImage
+                //进行升级提示
+                clearLineTipImage.image = UIImage(named:"levelup.jpg")
+                //初始化升级进度条
+                starProgress.progress = 0
             }
+        }else{
+            //当前分数是900，需要1000才升级
+            //            百分比需要是0.9，折合就得是0.45
+            let normalizedProgress = Double(score) / 2 / Double(upLevelScore)
+            //            print(normalizedProgress,upLevelScore)
             
+            starProgress.progress = normalizedProgress
         }
         
         //显示级别
@@ -578,11 +645,11 @@ class HomeViewController: UIViewController {
     func LineArrayWaitForClear() -> NSMutableArray{
         
         var lineMaybeFull_Arr :Array<Int> = [];
-//        for i in 0..<kRowCount {
-//
-//            lineMaybeFull_Arr.append(i)
-//        }
-//找出刚落下的组合对应的都是第几行、需要修复，只有满足条件的都需要移除，不仅仅这几行
+        //        for i in 0..<kRowCount {
+        //
+        //            lineMaybeFull_Arr.append(i)
+        //        }
+        //找出刚落下的组合对应的都是第几行、需要修复，只有满足条件的都需要移除，不仅仅这几行
         for i in 0..<self.group.subviews.count {
             let square = self.group.subviews[i]as!BasicSquare
             if square.isSelectSquare {
@@ -601,7 +668,7 @@ class HomeViewController: UIViewController {
         }
         //test
         
-        print("加入的第\(lineMaybeFull_Arr)行")
+        //        print("加入的第\(lineMaybeFull_Arr)行")
         
         //拿到这些行里面的所有按钮的索引
         let indexArrays = NSMutableArray()
@@ -630,8 +697,8 @@ class HomeViewController: UIViewController {
                 let squareIndex = indexArr[j] as! Int
                 let square = _squareRoomView.subviews[squareIndex]as!BasicSquare
                 //test
-//                let index = i * kColumnCount + j
-                print("第\(square.tag)的选中状态是\(square.isSelectSquare)")
+                //                let index = i * kColumnCount + j
+                //                print("第\(square.tag)的选中状态是\(square.isSelectSquare)")
                 if square.isSelectSquare {
                 }else{
                     notFullFlag = 1
@@ -647,7 +714,7 @@ class HomeViewController: UIViewController {
         
         //只保留满行的数组
         indexArrays.removeObjectsInArray(array: notFullLines)
-        print("需要消除的行\(indexArrays)")
+        //        print("需要消除的行\(indexArrays)")
         return indexArrays
         
         
@@ -863,6 +930,34 @@ class HomeViewController: UIViewController {
             disableButtonActions = false
             setupDropDownTimer()
         }
+    }
+    //返回
+    @IBAction func backBtn(_ sender: UIButton) {
+        
+        //保存数据
+//        var lineMaybeSave_Arr :Array<Int> = [];
+//        
+//        for i in 0..<_squareRoomView.subviews.count {
+//            
+//            let square = _squareRoomView.subviews[i]
+//            if square.isKind(of: BasicSquare) {
+//                if square.isSelectSquare {
+////                    lineMaybeSave_Arr.append(1)
+//                }else{
+//                    lineMaybeSave_Arr.append(0)
+//                }
+//            }
+//            
+//        }
+//        
+//        CustomUtil.saveGameRecord(record: lineMaybeSave_Arr)
+        
+        self.dismiss(animated: true) {
+            
+            
+            
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {

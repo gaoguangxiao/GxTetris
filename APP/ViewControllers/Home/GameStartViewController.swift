@@ -8,9 +8,14 @@
 
 import UIKit
 
-class GameStartViewController: ViewControllerImpl {
+class GameStartViewController: UIViewController {
 
     @IBOutlet weak var _soundSetting: UIButton!
+    
+    //1.0.2 增加隐藏状态栏
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,17 +25,22 @@ class GameStartViewController: ViewControllerImpl {
     }
 
     @IBAction func StartGame(_ sender: UIButton) {
+        
         let V = HomeViewController.init(nibName: "HomeViewController", bundle: nil)
-        self.navigationController?.pushViewController(V, animated: true)
+        V.isNewGame = sender.tag == 0 ? true : false
+        self.present(V, animated: true, completion: {
+            
+        })
+//        self.navigationController?.pushViewController(V, animated: true)
         
     }
     
     //控制音效
     @IBAction func SoundSetting(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        AudioPlayer.play()
-        //选中状态是禁止播放
-        CustomUtil.saveSoundSet(status: !sender.isSelected)
+//        sender.isSelected = !sender.isSelected
+//        AudioPlayer.play()
+//        //选中状态是禁止播放
+//        CustomUtil.saveSoundSet(status: !sender.isSelected)
     }
     
     

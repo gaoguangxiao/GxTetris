@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F1FED11EC27A2A38B20619F /* Pods_GxTetris.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DE20DEFCDBDB1FB3987AAF6 /* Pods_GxTetris.framework */; };
 		9A0AE6AA1F29990400A4B8F3 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0AE6A91F29990400A4B8F3 /* UIColor+Extension.swift */; };
 		9A0AE6AD1F29B80F00A4B8F3 /* GameStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0AE6AB1F29B80F00A4B8F3 /* GameStartViewController.swift */; };
 		9A0AE6AE1F29B80F00A4B8F3 /* GameStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0AE6AC1F29B80F00A4B8F3 /* GameStartViewController.xib */; };
@@ -121,9 +122,14 @@
 		9AA914AC1F1DAF89007FCD95 /* ViewControllerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA914AB1F1DAF89007FCD95 /* ViewControllerImpl.swift */; };
 		9AA914B61F1DBF6C007FCD95 /* Alamofire+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA914B51F1DBF6C007FCD95 /* Alamofire+Extension.swift */; };
 		9AB0E9471F20A19900F37642 /* RHTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0E9461F20A19900F37642 /* RHTabBarViewController.swift */; };
+		9ABA17101F307A0900DE6288 /* levelup.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA170F1F307A0900DE6288 /* levelup.jpg */; };
+		9ABA17151F30805A00DE6288 /* Continue.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA17121F30805A00DE6288 /* Continue.png */; };
+		9ABA17161F30805A00DE6288 /* NewGame.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA17131F30805A00DE6288 /* NewGame.png */; };
+		9ABA17171F30805A00DE6288 /* ReadProgress.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ABA17141F30805A00DE6288 /* ReadProgress.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5DE20DEFCDBDB1FB3987AAF6 /* Pods_GxTetris.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GxTetris.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6160EBCF3DEA30368C1472C6 /* Pods-GxTetris.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GxTetris.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GxTetris/Pods-GxTetris.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0AE6A91F29990400A4B8F3 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		9A0AE6AB1F29B80F00A4B8F3 /* GameStartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStartViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +247,10 @@
 		9AA914AB1F1DAF89007FCD95 /* ViewControllerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerImpl.swift; sourceTree = "<group>"; };
 		9AA914B51F1DBF6C007FCD95 /* Alamofire+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+Extension.swift"; sourceTree = "<group>"; };
 		9AB0E9461F20A19900F37642 /* RHTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RHTabBarViewController.swift; sourceTree = "<group>"; };
+		9ABA170F1F307A0900DE6288 /* levelup.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = levelup.jpg; sourceTree = "<group>"; };
+		9ABA17121F30805A00DE6288 /* Continue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Continue.png; sourceTree = "<group>"; };
+		9ABA17131F30805A00DE6288 /* NewGame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewGame.png; sourceTree = "<group>"; };
+		9ABA17141F30805A00DE6288 /* ReadProgress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ReadProgress.png; sourceTree = "<group>"; };
 		FA1C8C173DEAD1D076F69AC2 /* Pods-GxTetris.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GxTetris.release.xcconfig"; path = "Pods/Target Support Files/Pods-GxTetris/Pods-GxTetris.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -249,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F1FED11EC27A2A38B20619F /* Pods_GxTetris.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				9A0AE6C21F29B93600A4B8F3 /* ico_amazing_str.png */,
+				9ABA170F1F307A0900DE6288 /* levelup.jpg */,
 				9A0AE6C51F29B93600A4B8F3 /* ico_cool_strl.png */,
 				9A0AE6C61F29B93600A4B8F3 /* ico_good_str.png */,
 				9A0AE6C91F29B93600A4B8F3 /* ico_newRecord_str_.png */,
@@ -371,6 +383,7 @@
 		9A80E3151F289EC500EDEF1E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9ABA17111F30805A00DE6288 /* StartScene */,
 				9A0AE6F81F29C13800A4B8F3 /* main */,
 				9A0AE6AF1F29B93600A4B8F3 /* start */,
 				9A0AE6C01F29B93600A4B8F3 /* str */,
@@ -572,9 +585,20 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		9ABA17111F30805A00DE6288 /* StartScene */ = {
+			isa = PBXGroup;
+			children = (
+				9ABA17121F30805A00DE6288 /* Continue.png */,
+				9ABA17131F30805A00DE6288 /* NewGame.png */,
+				9ABA17141F30805A00DE6288 /* ReadProgress.png */,
+			);
+			path = StartScene;
+			sourceTree = "<group>";
+		};
 		ADB37295D22A92F62836F8A7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DE20DEFCDBDB1FB3987AAF6 /* Pods_GxTetris.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -647,9 +671,11 @@
 				9A0AE6D41F29B93600A4B8F3 /* ico_clean.png in Resources */,
 				9A0AE6DD1F29B93600A4B8F3 /* ico_weixin.png in Resources */,
 				9A0AE7511F29E71A00A4B8F3 /* star_g.png in Resources */,
+				9ABA17171F30805A00DE6288 /* ReadProgress.png in Resources */,
 				9A0AE6F71F29B9C200A4B8F3 /* game_bg.png in Resources */,
 				9A0AE7441F29C67E00A4B8F3 /* rotation.mp3 in Resources */,
 				9A0AE7391F29C20F00A4B8F3 /* music.ogg in Resources */,
+				9ABA17101F307A0900DE6288 /* levelup.jpg in Resources */,
 				9A0AE70A1F29C13800A4B8F3 /* ico_add_cell.png in Resources */,
 				9A0AE73A1F29C20F00A4B8F3 /* select.mp3 in Resources */,
 				9A0AE74A1F29E6AC00A4B8F3 /* hadChallenge.png in Resources */,
@@ -681,6 +707,7 @@
 				9A0AE73E1F29C20F00A4B8F3 /* wino.wav in Resources */,
 				9A0AE6DB1F29B93600A4B8F3 /* ico_tetris.png in Resources */,
 				9A0AE7371F29C20F00A4B8F3 /* gameover.mp3 in Resources */,
+				9ABA17161F30805A00DE6288 /* NewGame.png in Resources */,
 				9A8BCA091F29834000166303 /* CTGpause.png in Resources */,
 				9A0AE7101F29C13800A4B8F3 /* ico_del_cell.png in Resources */,
 				9A0AE72E1F29C20F00A4B8F3 /* s_change.wav in Resources */,
@@ -720,6 +747,7 @@
 				9A80E3111F289DD700EDEF1E /* game_title.png in Resources */,
 				9A8BCA0F1F29834000166303 /* CTGshare.png in Resources */,
 				9A0AE7361F29C20F00A4B8F3 /* destroy.mp3 in Resources */,
+				9ABA17151F30805A00DE6288 /* Continue.png in Resources */,
 				9A0AE7181F29C13800A4B8F3 /* ico_sure.png in Resources */,
 				9A8BCA061F29834000166303 /* CTGcontinue.png in Resources */,
 				9A9CC8521F2B15A400856B0F /* badge_call.png in Resources */,

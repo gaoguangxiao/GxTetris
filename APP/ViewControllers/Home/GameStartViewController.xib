@@ -23,9 +23,13 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="game_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="1nX-mx-DYX">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogn-pB-rMd">
-                    <rect key="frame" x="24.5" y="272.5" width="326" height="122"/>
-                    <state key="normal" image="ico_start.png"/>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogn-pB-rMd">
+                    <rect key="frame" x="112" y="297" width="150" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="ep7-sI-M6B"/>
+                        <constraint firstAttribute="height" constant="65" id="rrf-w6-25B"/>
+                    </constraints>
+                    <state key="normal" image="Continue.png"/>
                     <connections>
                         <action selector="StartGame:" destination="-1" eventType="touchUpInside" id="c66-3p-PU0"/>
                     </connections>
@@ -44,29 +48,43 @@
                         <action selector="SoundSetting:" destination="-1" eventType="touchUpInside" id="Qro-lo-OVV"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D6c-KY-rh4">
+                    <rect key="frame" x="112" y="392" width="150" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="IGN-iY-Ldc"/>
+                        <constraint firstAttribute="height" constant="65" id="qD1-kg-UUM"/>
+                    </constraints>
+                    <state key="normal" image="NewGame.png"/>
+                    <connections>
+                        <action selector="StartGame:" destination="-1" eventType="touchUpInside" id="vRy-vs-dsK"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="1nX-mx-DYX" secondAttribute="bottom" id="545-yY-Hz9"/>
                 <constraint firstItem="0zV-qf-n8J" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7AV-5E-xd9"/>
                 <constraint firstAttribute="trailing" secondItem="0zV-qf-n8J" secondAttribute="trailing" id="BM4-b6-T5g"/>
-                <constraint firstItem="ogn-pB-rMd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="JZA-4E-qeD"/>
-                <constraint firstItem="ogn-pB-rMd" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="btR-8k-qFp"/>
+                <constraint firstItem="D6c-KY-rh4" firstAttribute="top" secondItem="ogn-pB-rMd" secondAttribute="bottom" constant="30" id="Xyo-JT-1Gz"/>
+                <constraint firstItem="S56-QI-lPA" firstAttribute="top" secondItem="D6c-KY-rh4" secondAttribute="bottom" constant="100" id="awN-U5-hBr"/>
                 <constraint firstItem="1nX-mx-DYX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="cch-gu-hiB"/>
                 <constraint firstItem="0zV-qf-n8J" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lxz-7j-cYN"/>
                 <constraint firstItem="1nX-mx-DYX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rEf-rK-bjV"/>
+                <constraint firstItem="D6c-KY-rh4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="saH-ba-zPs"/>
                 <constraint firstAttribute="trailing" secondItem="1nX-mx-DYX" secondAttribute="trailing" id="szb-EX-XtD"/>
                 <constraint firstItem="S56-QI-lPA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tGd-3f-zLh"/>
+                <constraint firstItem="D6c-KY-rh4" firstAttribute="centerX" secondItem="ogn-pB-rMd" secondAttribute="centerX" id="the-nw-MiA"/>
                 <constraint firstAttribute="bottom" secondItem="S56-QI-lPA" secondAttribute="bottom" constant="20" id="uac-SY-zJU"/>
             </constraints>
             <point key="canvasLocation" x="24.5" y="51.5"/>
         </view>
     </objects>
     <resources>
+        <image name="Continue.png" width="299" height="122"/>
+        <image name="NewGame.png" width="299" height="122"/>
         <image name="game_bg.png" width="640" height="1136"/>
         <image name="ico_sound_close.png" width="90" height="90"/>
         <image name="ico_sound_open.png" width="90" height="90"/>
-        <image name="ico_start.png" width="326" height="122"/>
         <image name="ico_title_beian.png" width="600" height="282"/>
     </resources>
 </document>

@@ -13,7 +13,7 @@ let U_TOKEN = "TOKEN"
 let U_RBESTSCORE = "BESTSCORE"
 let U_SOUNDSTATUS = "SOUNDSTATUS"
 let U_USERRANGE = "USERRANGE"
-
+let U_USERRECORD = "USERRECORD"
 let USER_DEFAULT = UserDefaults.standard
 
 class CustomUtil: NSObject {
@@ -81,4 +81,16 @@ class CustomUtil: NSObject {
         }
     }
     
+    //存储上一局的游戏记录
+    static func saveGameRecord(record:Array<Any>){
+        USER_DEFAULT.set(record, forKey: U_USERRECORD)
+        USER_DEFAULT.synchronize()
+    }
+    static func getGameRecord()->Array<Any>{
+        if (USER_DEFAULT.value(forKey: U_USERRECORD) != nil) {
+            return USER_DEFAULT.value(forKey: U_USERRECORD) as! Array<Any>
+        }else{
+            return [true]
+        }
+    }
 }
