@@ -18,8 +18,8 @@ let kRowCount = 20 //20 高度保持440
 let kColumnCount = 11
 let kSquareWH  = 22
 
-//mei'xiao'gou
-let upLevel = 15//控制消行的升级问题
+//
+let upgradeNeedClearLine = 15//控制消行的升级问题
 
 
 class HomeViewController: UIViewController {
@@ -103,44 +103,23 @@ class HomeViewController: UIViewController {
         
         //可以继续游戏保存之前的游戏状态
         initConfigs()
+        //绘制游戏UI
+        setupUI()
+        //开始降落
+        //test
+        startPlay()
         
         if isNewGame {
-            setupUI()
+//            setupUI()
         }else{
             //将
             containconvertGroupSquareToBlack()
         }
         
-        //test
-        startPlay()
+       
         
     }
     
-    //将上一局玩的数据在这次重新计入
-    func containconvertGroupSquareToBlack() {
-        
-        //获取上一级保存的记录 [true, ]
-        var lastRecord = CustomUtil.getGameRecord()
-        
-        //        for _ in 0...lastRecord.count {
-        //             let bangIndex = Int(arc4random_uniform(UInt32(2)));
-        //            lastRecord.append([false,true][bangIndex])
-        //        }
-        //
-        print(lastRecord)
-        
-        //固定已经下落的组合
-        for i in 0..<lastRecord.count{
-            
-            let  belowSquare = _squareRoomView.subviews[i] as!BasicSquare
-            //1、赋值 选中状态
-            belowSquare.isSelectSquare = true
-            //2、赋值 选中状态的图片
-            belowSquare.setSquareSelectImage(image: self.group.selectImage, nomalImage: UIImage.init())
-            
-            
-        }
-    }
     
     
     
@@ -215,8 +194,27 @@ class HomeViewController: UIViewController {
         tipBoardView.addSubview(selectShow)
         
     }
-    
-    
+    //将上一局玩的数据在这次重新计入
+    func containconvertGroupSquareToBlack() {
+        
+        //获取上一级保存的记录 [true, ]
+        let lastRecord = CustomUtil.getGameRecord()
+        print(lastRecord)
+        
+        //固定已经下落的组合
+        for i in 0..<lastRecord.count{
+            
+            let  belowSquare = _squareRoomView.subviews[i] as!BasicSquare
+            //1、赋值 选中状态
+            belowSquare.isSelectSquare = lastRecord[i] as! Bool
+            //2、赋值 选中状态的图片
+            belowSquare.setSquareSelectImage(image: self.group.selectImage, nomalImage: UIImage.init())
+            
+            
+        }
+    }
+
+//    MARK:- 定时器
     func setupDropDownTimer() {
         
         if (self.dropDownTimer != nil) {
@@ -597,9 +595,9 @@ class HomeViewController: UIViewController {
             }
         }
         //调整等级 上限10
-        if speedLevel < 6,levelUpCounter >= upLevel {
+        if speedLevel < 5,levelUpCounter >= upgradeNeedClearLine {
             speedLevel = speedLevel + 1
-            levelUpCounter = levelUpCounter - upLevel
+            levelUpCounter = levelUpCounter - upgradeNeedClearLine
         }
         //显示消除的行数
         lineCountField.text = String(format: "%d",levelUpCounter)
@@ -934,30 +932,29 @@ class HomeViewController: UIViewController {
     //返回
     @IBAction func backBtn(_ sender: UIButton) {
         
-        //保存数据
-//        var lineMaybeSave_Arr :Array<Int> = [];
-//        
-//        for i in 0..<_squareRoomView.subviews.count {
-//            
-//            let square = _squareRoomView.subviews[i]
-//            if square.isKind(of: BasicSquare) {
-//                if square.isSelectSquare {
-////                    lineMaybeSave_Arr.append(1)
-//                }else{
-//                    lineMaybeSave_Arr.append(0)
-//                }
-//            }
-//            
-//        }
-//        
-//        CustomUtil.saveGameRecord(record: lineMaybeSave_Arr)
-        
         self.dismiss(animated: true) {
-            
-            
-            
+//            self.SaveGameRecord(UIButton())
         }
         
+    }
+    //保存游戏进度
+    @IBAction func SaveGameRecord(_ sender: UIButton) {
+        var lineMaybeSave_Arr :Array<Int> = [];
+        for i in 0..<self._squareRoomView.subviews.count {
+            let square = self._squareRoomView.subviews[i]
+            if square is BasicSquare{
+                let squareTemp = square as!BasicSquare
+                
+                if squareTemp.isSelectSquare {
+                    lineMaybeSave_Arr.append(1)
+                }else{
+                    lineMaybeSave_Arr.append(0)
+                }
+            }
+        }
+        CustomUtil.saveGameRecord(record: lineMaybeSave_Arr)
+        //输出查看，保存的游戏记录是否正确
+//        print(CustomUtil.getGameRecord())
     }
     
     override func didReceiveMemoryWarning() {

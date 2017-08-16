@@ -67,6 +67,17 @@
                         <action selector="rePlay:" destination="-1" eventType="touchUpInside" id="ckG-ah-Klu"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGZ-YD-Rlr">
+                    <rect key="frame" x="56" y="0.0" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="Xh3-xH-xSP"/>
+                        <constraint firstAttribute="height" constant="40" id="rsZ-72-dok"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="ico_sure.png"/>
+                    <connections>
+                        <action selector="SaveGameRecord:" destination="-1" eventType="touchUpInside" id="nRJ-S8-FFy"/>
+                    </connections>
+                </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rJ0-Cx-dRQ">
                     <rect key="frame" x="119" y="0.0" width="136" height="40"/>
                     <constraints>
@@ -326,6 +337,7 @@
                 <constraint firstItem="rJ0-Cx-dRQ" firstAttribute="centerY" secondItem="bdr-wI-0dV" secondAttribute="centerY" id="e12-f2-5P4"/>
                 <constraint firstItem="bdr-wI-0dV" firstAttribute="leading" secondItem="0BJ-pb-Fbi" secondAttribute="leading" constant="8" id="g8q-Wf-zUL"/>
                 <constraint firstItem="KQw-8a-8A0" firstAttribute="leading" secondItem="c75-TC-cpo" secondAttribute="trailing" constant="5" id="gV9-Ji-OqW"/>
+                <constraint firstItem="rJ0-Cx-dRQ" firstAttribute="centerY" secondItem="AGZ-YD-Rlr" secondAttribute="centerY" id="i2J-ZF-0RX"/>
                 <constraint firstItem="15b-h1-5KI" firstAttribute="leading" secondItem="If2-uA-IrG" secondAttribute="trailing" constant="5" id="iEo-2O-RjP"/>
                 <constraint firstItem="R4A-0b-K4I" firstAttribute="leading" secondItem="B68-Oa-1Nf" secondAttribute="leading" id="iNh-It-akv"/>
                 <constraint firstItem="sV7-Nb-qhS" firstAttribute="trailing" secondItem="Z0n-tF-vXI" secondAttribute="trailing" id="iPb-7p-1CP"/>
@@ -341,6 +353,7 @@
                 <constraint firstItem="FZq-Pt-BN4" firstAttribute="leading" secondItem="B68-Oa-1Nf" secondAttribute="leading" id="qh3-Rs-BLF"/>
                 <constraint firstItem="sV7-Nb-qhS" firstAttribute="top" secondItem="zns-LD-xdR" secondAttribute="bottom" constant="5" id="r7g-aj-jeq"/>
                 <constraint firstItem="ysg-LF-mKr" firstAttribute="trailing" secondItem="74K-33-42N" secondAttribute="trailing" id="rL7-ib-eRD"/>
+                <constraint firstItem="AGZ-YD-Rlr" firstAttribute="leading" secondItem="bdr-wI-0dV" secondAttribute="trailing" constant="8" id="sYv-7C-MBt"/>
                 <constraint firstItem="FZq-Pt-BN4" firstAttribute="trailing" secondItem="B68-Oa-1Nf" secondAttribute="trailing" id="shA-FW-Pey"/>
                 <constraint firstAttribute="trailing" secondItem="74K-33-42N" secondAttribute="trailing" constant="8" id="uOz-at-wTj"/>
                 <constraint firstItem="zns-LD-xdR" firstAttribute="leading" secondItem="9us-Pf-wXL" secondAttribute="leading" id="uWE-vC-kx5"/>
@@ -394,5 +407,6 @@
         <image name="home_bg.png" width="640" height="1136"/>
         <image name="ico_cancel.png" width="108" height="104"/>
         <image name="ico_good_str.png" width="127" height="90"/>
+        <image name="ico_sure.png" width="113" height="101"/>
     </resources>
 </document>

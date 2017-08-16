@@ -40,7 +40,7 @@
                         <constraint firstAttribute="height" constant="142" id="tZZ-gK-6je"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S56-QI-lPA">
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S56-QI-lPA">
                     <rect key="frame" x="142" y="557" width="90" height="90"/>
                     <state key="normal" image="ico_sound_open.png"/>
                     <state key="selected" image="ico_sound_close.png"/>
