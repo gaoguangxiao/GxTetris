@@ -11,22 +11,19 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white//设置window颜色
         
-//        let tabbar = RHTabBarViewController()//初始化
+        //        let tabbar = RHTabBarViewController()//初始化
         let home = GameStartViewController()
         //设置导航栏为指引项
-//        let homeNavi = UINavigationController.init(rootViewController: home)
+        //        let homeNavi = UINavigationController.init(rootViewController: home)
         window?.rootViewController = home
         window?.makeKeyAndVisible()
         // Override point for customization after application launch.
-        return true
     }
-    
+   
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

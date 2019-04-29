@@ -1,12 +1,16 @@
 PODS:
-  - KYCircularProgress (1.0.1)
+  - KYCircularProgress (1.2.1)
 
 DEPENDENCIES:
   - KYCircularProgress
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - KYCircularProgress
+
 SPEC CHECKSUMS:
-  KYCircularProgress: b782af0a68dd2032a4a523e722ec8d571c285cf2
+  KYCircularProgress: caa1a8d1defa2acf05d2f84ea681467fbdb6d353
 
 PODFILE CHECKSUM: 44fd10d0dda6a2b1a6848dbb1ae90b47b7b8d73f
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.6.1

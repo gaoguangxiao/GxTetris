@@ -56,13 +56,14 @@ class HomeViewController: UIViewController {
     var speedLevel   :Int! = 0//速度级别
     var startupLines :Int! = 0//起始行数
     
+    var starProgress :KYCircularProgress!
+    
     @IBOutlet weak var clearLineTipImage: UIImageView!
     //1.0.2 顶部图片变形处理
     @IBOutlet weak var bannerBg: UIImageView!
     @IBOutlet weak var nickNAme: UIImageView!//称为
     //1.0.3 增加升级进度条
     @IBOutlet weak var progressView: UIView!
-    private var starProgress: KYCircularProgress!
     var isNewGame : Bool! = false//新游戏
     
     @IBOutlet weak var PointNum: UILabel!//百分比
@@ -80,17 +81,17 @@ class HomeViewController: UIViewController {
         //获取上次保持的音乐控制、进来是播放音乐的
         //        AudioPlayer.share(soundFileName: "m_game_bg.mp3")
         //
-        let edgeInsetImage = UIEdgeInsetsMake(0, 0, 0, 0)
+        let edgeInsetImage = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let okImage = UIImage.init(named:"banner_bg")
-        bannerBg.image = okImage?.resizableImage(withCapInsets: edgeInsetImage, resizingMode: UIImageResizingMode.stretch)
+        bannerBg.image = okImage?.resizableImage(withCapInsets: edgeInsetImage, resizingMode: UIImage.ResizingMode.stretch)
         
         
         
-        let soundbtn = UIButton.init(type: UIButtonType.custom)
+        let soundbtn = UIButton.init(type: UIButton.ButtonType.custom)
         soundbtn.frame = CGRect(x:0,y:0,width:40,height:40)
-        soundbtn.setImage(UIImage.init(named: "ico_sound_close.png"), for: UIControlState.selected)
-        soundbtn.setImage(UIImage.init(named: "ico_sound_open.png"), for: UIControlState.normal)
-        soundbtn.addTarget(self, action: #selector(SoundSetting(sender:)), for: UIControlEvents.touchUpInside)
+        soundbtn.setImage(UIImage.init(named: "ico_sound_close.png"), for: UIControl.State.selected)
+        soundbtn.setImage(UIImage.init(named: "ico_sound_open.png"), for: UIControl.State.normal)
+        soundbtn.addTarget(self, action: #selector(SoundSetting(sender:)), for: UIControl.Event.touchUpInside)
         //        let rightItem = UIBarButtonItem.init(customView: soundbtn)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: soundbtn)
         
@@ -123,7 +124,7 @@ class HomeViewController: UIViewController {
     
     
     
-    func SoundSetting(sender: UIButton) {
+    @objc func SoundSetting(sender: UIButton) {
         sender.isSelected = !sender.isSelected
         AudioPlayer.play()
         //选中状态是禁止播放
@@ -239,7 +240,7 @@ class HomeViewController: UIViewController {
         }
         
         dropDownTimer = Timer.scheduledTimer(timeInterval:duartion, target: self, selector: #selector(down(_:)), userInfo: nil, repeats: true)
-        RunLoop.current.add(dropDownTimer, forMode: RunLoopMode.commonModes)
+        RunLoop.current.add(dropDownTimer, forMode: RunLoop.Mode.common)
     }
     //添加手势拖动
     @IBAction func PanKeepMove(_ sender: UIPanGestureRecognizer) {
@@ -270,10 +271,10 @@ class HomeViewController: UIViewController {
         
         if keepMoveTimer == nil {
             keepMoveTimer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: controlAction, userInfo: nil, repeats: true)
-            RunLoop.current.add(keepMoveTimer, forMode: RunLoopMode.commonModes)
+            RunLoop.current.add(keepMoveTimer, forMode: RunLoop.Mode.common)
         }
         
-        if (sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.ended || sender.state == UIGestureRecognizerState.cancelled) {
+        if (sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.ended || sender.state == UIGestureRecognizer.State.cancelled) {
             keepMoveTimer.invalidate();
             self.keepMoveTimer = nil;
             
@@ -479,7 +480,7 @@ class HomeViewController: UIViewController {
                 refreshTimer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true, block: { (timer) in
                     refreshWhite()
                 })
-                RunLoop.current.add(refreshTimer, forMode: RunLoopMode.commonModes)
+                RunLoop.current.add(refreshTimer, forMode: RunLoop.Mode.common)
                 
             }else{
                 let j = (startIndex - kColumnCount)
@@ -497,7 +498,7 @@ class HomeViewController: UIViewController {
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 0.04, repeats: true, block: { (timer) in
             refresh()
         })
-        RunLoop.current.add(refreshTimer, forMode: RunLoopMode.commonModes)
+        RunLoop.current.add(refreshTimer, forMode: RunLoop.Mode.common)
     }
     //消行、
     func clearFullLines() {

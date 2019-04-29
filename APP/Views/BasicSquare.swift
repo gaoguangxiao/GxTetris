@@ -34,7 +34,7 @@ extension UIButton{
     
     //更新选中的图片状态，
     func setSquareSelectImage(image:UIImage,nomalImage:UIImage)  {
-        self.setBackgroundImage(image, for: UIControlState.selected)
+        self.setBackgroundImage(image, for: UIControl.State.selected)
 //        self.setBackgroundImage(nomalImage, for: UIControlState.normal)
 
     }
@@ -60,7 +60,7 @@ class BasicSquare: UIButton {
       
     }
     
-    override func setImage(_ image: UIImage?, for state: UIControlState) {
+    override func setImage(_ image: UIImage?, for state: UIControl.State) {
         
     }
     
@@ -73,8 +73,8 @@ class BasicSquare: UIButton {
     func newShowPic(image:UIImage)  {
         internalImage = image
 //        print("%d",self.isSelectSquare)
-        self.setBackgroundImage(internalImage, for: UIControlState.selected)
-        self.setBackgroundImage(nil, for: UIControlState.normal)
+        self.setBackgroundImage(internalImage, for: UIControl.State.selected)
+        self.setBackgroundImage(nil, for: UIControl.State.normal)
 
 //        print(image)
     }
@@ -84,8 +84,8 @@ class BasicSquare: UIButton {
 
 //       self.setBackgroundImage((sender as!Bool)?:internalImage:nil, for: UIControlState.normal)
         //随机取出一种颜色
-        self.setBackgroundImage(internalImage, for: UIControlState.selected)
-        self.setBackgroundImage(nil, for: UIControlState.normal)
+        self.setBackgroundImage(internalImage, for: UIControl.State.selected)
+        self.setBackgroundImage(nil, for: UIControl.State.normal)
 //        self.setBackgroundImage(UIImage.init(named: "star_b"), for: UIControlState.selected)
     }
     
